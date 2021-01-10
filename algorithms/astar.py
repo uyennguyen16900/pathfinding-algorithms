@@ -1,3 +1,7 @@
+from heapq import heapify, heappop, heappush
+from node import Node
+
+
 def astar(startNode, targetNode, grid):
     # gCost - distance from starting node
     # hCost - distance from target node
@@ -7,27 +11,26 @@ def astar(startNode, targetNode, grid):
     openSet = []
     # closedSet contains nodes that have already been examined
     closedSet = set()
+    startNode.distance = 0
 
     # openSet.add(startNode)
     heappush(openSet, (startNode.distance, startNode))
     while openSet:
         curr = heappop(openSet)
-        # curr.gCost = 0
-        # curr.heuristicCost = 0
-        curr.distance = 0
-        neighbors = getNeighbors(cur, grid)
         closedSet.add(curr)
-        curr.isVisited = True
+
         if curr == targetNode:
             return
+
+        neighbors = getNeighbors(curr, grid)
         for neighbor in neighbors:
-            if neighbor.isVisited:
-                continue
-            neighbor.gCost = curr.gCost + 1  # 1 is the distance between neighbor and curr node
-            neighbor.heuristicCost = manhattanDistance(neighbor, targetNode)
-            neighbor.distance = neighbor.gCost + neighbor.heuristicCost
-            if neighbor not in openSet:
-                openSet.add(neighbor)
+            gCost = curr.gCost + 1  # 1 is the distance between neighbor and curr node
+            if neighbor not in openSet or gCost < neighbor.gCost:
+                neighbor.gCost = gCost
+                neighbor.heuristicCost = manhattanDistance(
+                    neighbor, targetNode)
+                neighbor.distance = neighbor.gCost + neighbor.heuristicCost
+                heappush(openSet, (neighbor.distance, neighbor))
                 neighbor.prev = curr
 
 
@@ -45,13 +48,12 @@ def getNeighbors(node, grid):
     neighbors = []
     row, col = node.row, node.col
 
-    if col < len(grid[0]) - 1:
-        neighbors.append(grid[row][col+1])
-    if col > 0:
-        neighbors.append(grid[row][col-1])
-    if row > 0:
-        neighbors.append(grid[row-1][col])
-    if row < len(grid) - 1:
-        neighbors.append(grid[row+1][col])
+    for new_position in [(0, -1), (0, 1), (1, 0), (-1, 0)]:
+        node_position = (
+            node.row + new_position[0], node.col + new_position[1])
+
+        #  within range and walkable
+        if node_position[0] < len(grid) and node_position[0] >= 0 and node_position[1] >= 0 and node_position[1] < len(grid) and grid[node_position[0]][new_position[1]] == 0:
+            neighbors.append(Node(new_position[0], new_position[1]))
 
     return neighbors

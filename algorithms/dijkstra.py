@@ -1,16 +1,5 @@
 from heapq import heapify, heappop, heappush
-
-
-class Node():
-    def __init__(self, row, col):
-        self.row = row
-        self.col = col
-        self.distance = float('inf')
-        self.isVisited = False
-        self.isWall = False
-        self.prev = None
-        self.gCost = float('inf')
-        self.heuristicCost = float('inf')
+from node import Node
 
 
 def dijkstra(startNode, targetNode, grid):
@@ -19,31 +8,34 @@ def dijkstra(startNode, targetNode, grid):
     unvisitedNodes = getAllNodes(grid)
     while unvisitedNodes:
         closestNode = heappop(unvisitedNodes)[1]
-        if self.isWall:
+        if closestNode.isWall:
             continue
         if closestNode.distance == float('inf'):
             return visitedNodes
-        self.isVisited = True
+        closestNode.isVisited = True
         if closestNode == targetNode:
             return visitedNodes
         visitedNodes.append(closestNode)
 
         # update the closest node's neighbors
-        row = closestNode.row
-        col = closestNode.col
         distance = closestNode.distance
-        if col < len(grid[0]) - 1:
-            grid[row][col+1].distance = distance + 1
-            grid[row][col+1].prev = closestNode
-        if col > 0:
-            grid[row][col-1].distance = distance + 1
-            grid[row][col-1].prev = closestNode
-        if row > 0:
-            grid[row-1][col].distance = distnace + 1
-            grid[row-1][col].prev = closestNode
-        if row < len(grid) - 1:
-            grid[row+1][col].distance = distance + 1
-            grid[row+1][col].prev = closestNode
+        for neighbor in neighbors:
+            neighbor.distance = distance + 1
+            neighbor.prev = closestNode
+
+
+def getNeighbors(node, grid):
+    neighbors = []
+    row, col = node.row, node.col
+
+    for new_position in [(0, -1), (0, 1), (1, 0), (-1, 0)]:
+        node_position = (
+            node.row + new_position[0], node.col + new_position[1])
+        #  within range and walkable
+        if node_position[0] < len(grid) and node_position[0] >= 0 and node_position[1] >= 0 and node_position[1] < len(grid) and grid[node_position[0]][new_position[1]] == 0:
+            neighbors.append(Node(new_position[0], new_position[1]))
+
+    return neighbors
 
 
 def getAllNodes(grid):
