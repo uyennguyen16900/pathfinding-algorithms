@@ -46,7 +46,6 @@ def euclideanDistance(startNode, endNode):
 
 def getNeighbors(node, grid):
     neighbors = []
-    row, col = node.row, node.col
 
     for new_position in [(0, -1), (0, 1), (1, 0), (-1, 0)]:
         node_position = (

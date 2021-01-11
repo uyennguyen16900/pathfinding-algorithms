@@ -19,6 +19,7 @@ def dijkstra(startNode, targetNode, grid):
 
         # update the closest node's neighbors
         distance = closestNode.distance
+        neighbors = getNeighbors(closestNode, grid)
         for neighbor in neighbors:
             neighbor.distance = distance + 1
             neighbor.prev = closestNode
@@ -26,7 +27,6 @@ def dijkstra(startNode, targetNode, grid):
 
 def getNeighbors(node, grid):
     neighbors = []
-    row, col = node.row, node.col
 
     for new_position in [(0, -1), (0, 1), (1, 0), (-1, 0)]:
         node_position = (
