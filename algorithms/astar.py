@@ -8,8 +8,8 @@ def astar(start, target, grid):
     #  fCost = gCost + hCost
     startNode = Node(start[0], start[1])
     targetNode = Node(target[0], target[1])
-    # startNode.gCost, startNode.heuristicCost = 0, 0
-    # targetNode.gCost, targetNode.heuristicCost = 0, 0
+    startNode.gCost, startNode.heuristicCost = 0, 0
+    targetNode.gCost, targetNode.heuristicCost = 0, 0
 
     # openSet contains nodes that are candidates for examining
     openSet = []
@@ -70,7 +70,7 @@ def getPath(startNode, targetNode, grid):
     return path[::-1]
 
 
-maze = [[0, 0, 0, 0, 1, 0, 0, 0, 0, 0],
+maze = [[0, 1, 0, 0, 1, 0, 0, 0, 0, 0],
         [0, 1, 0, 0, 1, 0, 0, 0, 0, 0],
         [0, 0, 1, 0, 1, 0, 0, 0, 0, 0],
         [0, 0, 0, 0, 1, 0, 0, 0, 0, 0],
