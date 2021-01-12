@@ -38,12 +38,12 @@ def astar(start, target, grid):
 
 
 def manhattanDistance(node, targetNode):
-    # Use this heuristic when move only in 4 directions (left, right, up, down)
+    """ Use this heuristic when move only in 4 directions (left, right, up, down) """
     return abs(node.row - targetNode.row) + abs(node.col - targetNode.col)
 
 
 def euclideanDistance(startNode, endNode):
-    # used when move in any direction
+    """ Used when move in any direction """
     return sqrt((startNode.row - endNode.row) ** 2 + (startNode.col - endNode.col) ** 2)
 
 
