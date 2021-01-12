@@ -7,9 +7,9 @@ def astar(start, target, grid):
     # hCost - distance from target node
     #  fCost = gCost + hCost
     startNode = Node(start[0], start[1])
-    startNode.gCost, startNode.heuristicCost = 0, 0
     targetNode = Node(target[0], target[1])
-    targetNode.gCost, targetNode.heuristicCost = 0, 0
+    # startNode.gCost, startNode.heuristicCost = 0, 0
+    # targetNode.gCost, targetNode.heuristicCost = 0, 0
 
     # openSet contains nodes that are candidates for examining
     openSet = []
@@ -22,8 +22,7 @@ def astar(start, target, grid):
         curr = heappop(openSet)[1]
         closedSet.append(curr)
         if curr == targetNode:
-            path = getPath(startNode, curr, grid)
-            return path
+            return getPath(startNode, curr, grid)
 
         neighbors = getNeighbors(curr, grid)
         for neighbor in neighbors:
@@ -71,27 +70,29 @@ def getPath(startNode, targetNode, grid):
     return path[::-1]
 
 
-maze = [[0, 0, 1, 0],
-        [1, 0, 0, 0],
-        [0, 0, 0, 0]]
+maze = [[0, 0, 0, 0, 1, 0, 0, 0, 0, 0],
+        [0, 1, 0, 0, 1, 0, 0, 0, 0, 0],
+        [0, 0, 1, 0, 1, 0, 0, 0, 0, 0],
+        [0, 0, 0, 0, 1, 0, 0, 0, 0, 0],
+        [0, 0, 0, 0, 1, 0, 0, 0, 0, 0],
+        [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+        [0, 0, 0, 0, 1, 0, 0, 0, 0, 0],
+        [0, 0, 0, 0, 1, 0, 0, 0, 0, 0],
+        [0, 0, 0, 0, 1, 0, 0, 0, 0, 0],
+        [0, 0, 0, 0, 0, 0, 0, 0, 0, 0]]
 
-# [[0, 0, 0, 0, 1, 0, 0, 0, 0, 0],
-#  [0, 1, 0, 0, 1, 0, 0, 0, 0, 0],
-#  [0, 0, 1, 0, 1, 0, 0, 0, 0, 0],
-#  [0, 0, 0, 0, 1, 0, 0, 0, 0, 0],
-#  [0, 0, 0, 0, 1, 0, 0, 0, 0, 0],
-#  [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
-#  [0, 0, 0, 0, 1, 0, 0, 0, 0, 0],
-#  [0, 0, 0, 0, 1, 0, 0, 0, 0, 0],
-#  [0, 0, 0, 0, 1, 0, 0, 0, 0, 0],
-#  [0, 0, 0, 0, 0, 0, 0, 0, 0, 0]]
-
-start = (0, 0)
+start = (2, 0)
 end = (0, 3)
 
 startNode = Node(start[0], start[1])
 print(astar(start, end, maze))
 print(maze)
+# for row in maze:
+#     for item in row:
+#         if item == 0:
+#             print " "
+#         elif item == 1:
+#             print "X"
 
 
 # a = []

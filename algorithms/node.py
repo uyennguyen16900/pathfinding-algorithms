@@ -13,3 +13,6 @@ class Node():
 
     def __eq__(self, other):
         return self.row == other.row and self.col == other.col
+
+    def __lt__(self, other):
+        return self.distance < other.distance
