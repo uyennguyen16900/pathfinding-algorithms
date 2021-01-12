@@ -2,30 +2,34 @@ from heapq import heapify, heappop, heappush
 from node import Node
 
 
-def astar(startNode, targetNode, grid):
+def astar(start, target, grid):
     # gCost - distance from starting node
     # hCost - distance from target node
     #  fCost = gCost + hCost
+    startNode = Node(start[0], start[1])
+    startNode.gCost, startNode.heuristicCost = 0, 0
+    targetNode = Node(target[0], target[1])
+    targetNode.gCost, targetNode.heuristicCost = 0, 0
 
     # openSet contains nodes that are candidates for examining
     openSet = []
     # closedSet contains nodes that have already been examined
-    closedSet = set()
-    startNode.distance = 0
+    closedSet = []
 
     # openSet.add(startNode)
     heappush(openSet, (startNode.distance, startNode))
-    while openSet:
-        curr = heappop(openSet)
-        closedSet.add(curr)
-
+    while len(openSet) > 0:
+        curr = heappop(openSet)[1]
+        closedSet.append(curr)
         if curr == targetNode:
-            return
+            path = getPath(startNode, curr, grid)
+            return path
 
         neighbors = getNeighbors(curr, grid)
         for neighbor in neighbors:
             gCost = curr.gCost + 1  # 1 is the distance between neighbor and curr node
-            if neighbor not in openSet or gCost < neighbor.gCost:
+
+            if (neighbor.distance, neighbor) not in openSet or gCost < neighbor.gCost:
                 neighbor.gCost = gCost
                 neighbor.heuristicCost = manhattanDistance(
                     neighbor, targetNode)
@@ -46,13 +50,50 @@ def euclideanDistance(startNode, endNode):
 
 def getNeighbors(node, grid):
     neighbors = []
-
     for new_position in [(0, -1), (0, 1), (1, 0), (-1, 0)]:
         node_position = (
             node.row + new_position[0], node.col + new_position[1])
-
         #  within range and walkable
-        if node_position[0] < len(grid) and node_position[0] >= 0 and node_position[1] >= 0 and node_position[1] < len(grid) and grid[node_position[0]][new_position[1]] == 0:
-            neighbors.append(Node(new_position[0], new_position[1]))
+        if node_position[0] < len(grid) and node_position[0] >= 0 and node_position[1] >= 0 and node_position[1] < len(grid[0]) and grid[node_position[0]][node_position[1]] == 0:
+            neighbors.append(Node(node_position[0], node_position[1]))
 
     return neighbors
+
+
+def getPath(startNode, targetNode, grid):
+    path = []
+    curr = targetNode
+    while curr != startNode:
+        path.append((curr.row, curr.col))
+        grid[curr.row][curr.col] = '.'
+        curr = curr.prev
+
+    return path[::-1]
+
+
+maze = [[0, 0, 1, 0],
+        [1, 0, 0, 0],
+        [0, 0, 0, 0]]
+
+# [[0, 0, 0, 0, 1, 0, 0, 0, 0, 0],
+#  [0, 1, 0, 0, 1, 0, 0, 0, 0, 0],
+#  [0, 0, 1, 0, 1, 0, 0, 0, 0, 0],
+#  [0, 0, 0, 0, 1, 0, 0, 0, 0, 0],
+#  [0, 0, 0, 0, 1, 0, 0, 0, 0, 0],
+#  [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+#  [0, 0, 0, 0, 1, 0, 0, 0, 0, 0],
+#  [0, 0, 0, 0, 1, 0, 0, 0, 0, 0],
+#  [0, 0, 0, 0, 1, 0, 0, 0, 0, 0],
+#  [0, 0, 0, 0, 0, 0, 0, 0, 0, 0]]
+
+start = (0, 0)
+end = (0, 3)
+
+startNode = Node(start[0], start[1])
+print(astar(start, end, maze))
+print(maze)
+
+
+# a = []
+# heappush(a, (1, 'ji'))
+# print((1, 'ji') in a)

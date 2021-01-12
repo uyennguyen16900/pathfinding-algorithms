@@ -1,28 +1,27 @@
 from heapq import heapify, heappop, heappush
-from node import Node
 
 
-def dijkstra(startNode, targetNode, grid):
+def dijkstra(start, target, grid):
+    startNode = Node(start[0], start[1])
+    targetNode = Node(target[0], target[1])
+
     visitedNodes = []
     startNode.distance = 0
     unvisitedNodes = getAllNodes(grid)
     while unvisitedNodes:
         closestNode = heappop(unvisitedNodes)[1]
-        if closestNode.isWall:
-            continue
-        if closestNode.distance == float('inf'):
-            return visitedNodes
         closestNode.isVisited = True
+        if closestNode.distance == float('inf'):
+            return
         if closestNode == targetNode:
-            return visitedNodes
+            return
         visitedNodes.append(closestNode)
-
         # update the closest node's neighbors
-        distance = closestNode.distance
         neighbors = getNeighbors(closestNode, grid)
         for neighbor in neighbors:
-            neighbor.distance = distance + 1
-            neighbor.prev = closestNode
+            if not neighbor.isVisited:
+                neighbor.distance = distance + 1
+                neighbor.prev = closestNode
 
 
 def getNeighbors(node, grid):
@@ -42,5 +41,6 @@ def getAllNodes(grid):
     nodes = []
     for row in range(len(grid)):
         for col in range(len(row)):
-            heappush(nodes, (grid[row][col].distance, grid[row][col]))
+            if grid[row][col] == 0:
+                heappush(nodes, (grid[row][col].distance, grid[row][col]))
     return nodes
