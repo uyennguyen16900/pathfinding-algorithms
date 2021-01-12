@@ -1,27 +1,32 @@
 from node import Node
 
 
-def bfs(start, target, grid):
+def dfs(start, target, grid):
     startNode = Node(start[0], start[1])
     targetNode = Node(target[0], target[1])
-    queue = []
-    queue.append(startNode)
-    visited = set([start])
-    while queue:
-        curr = queue.pop(0)
+
+    stack = []
+    startNode.isVisited = True
+    stack.append(startNode)
+    visited = set()
+    visited.add((startNode.row, startNode.col))
+    while stack:
+        curr = stack.pop()
         if curr == targetNode:
             return getPath(startNode, curr, grid)
         for neighbor in getNeighbors(curr, grid):
             if (neighbor.row, neighbor.col) not in visited:
-                neighbor.prev = curr
                 visited.add((neighbor.row, neighbor.col))
-                queue.append(neighbor)
+                neighbor.prev = curr
+                stack.append(neighbor)
+
+        # return ([(stack[i].row, stack[i].col) for i in range(len(stack))])
 
 
 def getNeighbors(node, grid):
     neighbors = []
 
-    for new_position in [(0, -1), (0, 1), (1, 0), (-1, 0)]:
+    for new_position in [(0, -1), (1, 0), (0, 1), (-1, 0)]:
         node_position = (
             node.row + new_position[0], node.col + new_position[1])
         #  within range and walkable
@@ -42,8 +47,8 @@ def getPath(startNode, targetNode, grid):
     return path[::-1]
 
 
-maze = [[0, 1, 0, 0, 1, 0, 0, 0, 0, 0],
-        [0, 1, 0, 0, 1, 0, 0, 0, 0, 0],
+maze = [[0, 0, 0, 0, 1, 0, 0, 0, 0, 0],
+        [0, 0, 0, 0, 1, 0, 0, 0, 0, 0],
         [0, 0, 1, 0, 1, 0, 0, 0, 0, 0],
         [0, 0, 0, 0, 1, 0, 0, 0, 0, 0],
         [0, 0, 0, 0, 1, 0, 0, 0, 0, 0],
@@ -53,20 +58,8 @@ maze = [[0, 1, 0, 0, 1, 0, 0, 0, 0, 0],
         [0, 0, 0, 0, 1, 0, 0, 0, 0, 0],
         [0, 0, 0, 0, 0, 0, 0, 0, 0, 0]]
 
-start = (0, 0)
+start = (1, 1)
 end = (9, 9)
 
-startNode = Node(start[0], start[1])
-print(bfs(start, end, maze))
+print(dfs(start, end, maze))
 print(maze)
-# for row in maze:
-#     for item in row:
-#         if item == 0:
-#             print " "
-#         elif item == 1:
-#             print "X"
-
-
-# a = []
-# heappush(a, (1, 'ji'))
-# print((1, 'ji') in a)
