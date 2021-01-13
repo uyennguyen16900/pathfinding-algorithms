@@ -1,6 +1,6 @@
 # Pathfinding
 
-Pathfinding seeks to find the shortest path in a 2D grid using Depth-first search, Breadth-first Search, Dijkstra's algorithm, and A\* search.
+Pathfinding seeks to find the shortest path between 2 given nodes in a 2D grid using Depth-first search, Breadth-first Search, [Dijkstra's algorithm](https://en.wikipedia.org/wiki/Dijkstra%27s_algorithm#Algorithm), and [A\* search](https://en.wikipedia.org/wiki/A*_search_algorithm).
 
 ### Built with:
 
@@ -25,9 +25,9 @@ These instructions will get you a copy of the project up and running on your loc
    python3 app.py
    ```
 
-### Demo
+## Demo
 
-<img src="public/astar-demo.gif" width=700>
+<img src="public/demo.gif" width=700>
 
 ## Acknowledgments
 

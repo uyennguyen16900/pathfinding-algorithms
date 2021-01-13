@@ -7,23 +7,22 @@ def dijkstra(start, target, grid):
     targetNode = Node(target[0], target[1])
     startNode.distance = 0
 
-    visitedNodes = []
-    # unvisitedNodes = getAllNodes(grid)
-    unvisitedNodes = []
+    visitedNodes = set()
+    unvisitedNodes = getAllNodes(grid)
+    # unvisitedNodes = []
     heappush(unvisitedNodes, (startNode.distance, startNode))
     while len(unvisitedNodes) > 0:
         closestNode = heappop(unvisitedNodes)[1]
-        visitedNodes.append(closestNode)
+        visitedNodes.add((closestNode.row, closestNode.col))
 
         if closestNode == targetNode:
-            print(closestNode.prev)
             return getPath(startNode, closestNode, grid)
         # update the closest node's neighbors
         neighbors = getNeighbors(closestNode, grid)
         for neighbor in neighbors:
             distance = closestNode.distance + 1
 
-            if neighbor in visitedNodes or distance < neighbor.distance:
+            if (neighbor.row, neighbor.col) not in visitedNodes and distance < neighbor.distance:
                 neighbor.distance = distance
                 neighbor.prev = closestNode
                 heappush(unvisitedNodes, (neighbor.distance, neighbor))
@@ -54,26 +53,9 @@ def getAllNodes(grid):
 def getPath(startNode, targetNode, grid):
     path = []
     curr = targetNode
-    return curr.row, curr.col
     while curr != startNode:
         path.append((curr.row, curr.col))
         grid[curr.row][curr.col] = '.'
         curr = curr.prev
 
     return path[::-1]
-
-
-maze = [[0, 0, 0, 0, 1, 0, 0, 0, 0, 0],
-        [0, 0, 0, 0, 1, 0, 0, 0, 0, 0],
-        [0, 0, 0, 0, 1, 0, 0, 0, 0, 0],
-        [0, 0, 0, 0, 1, 0, 0, 0, 0, 0],
-        [0, 0, 0, 0, 1, 0, 0, 0, 0, 0],
-        [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
-        [0, 0, 0, 0, 1, 0, 0, 0, 0, 0],
-        [0, 0, 0, 0, 1, 0, 0, 0, 0, 0],
-        [0, 0, 0, 0, 1, 0, 0, 0, 0, 0],
-        [0, 0, 0, 0, 0, 0, 0, 0, 0, 0]]
-start = (0, 0)
-end = (0, 9)
-
-# print(dijkstra(start, end, maze))

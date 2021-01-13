@@ -18,15 +18,15 @@ def move(start, target, grid, algorithm):
 
 
 if __name__ == "__main__":
-    maze = [[0, 0, 0, 0, 1, 0, 0, 0, 0, 0],
+    maze = [[0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+            [0, 0, 0, 0, 1, 0, 0, 0, 0, 0],
+            [0, 1, 1, 1, 1, 0, 0, 0, 0, 0],
             [0, 0, 0, 0, 1, 0, 0, 0, 0, 0],
             [0, 0, 0, 0, 1, 0, 0, 0, 0, 0],
             [0, 0, 0, 0, 1, 0, 0, 0, 0, 0],
             [0, 0, 0, 0, 1, 0, 0, 0, 0, 0],
-            [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
             [0, 0, 0, 0, 1, 0, 0, 0, 0, 0],
-            [0, 0, 0, 0, 1, 0, 0, 0, 0, 0],
-            [0, 0, 0, 0, 1, 0, 0, 0, 0, 0],
+            [0, 1, 1, 1, 1, 0, 0, 0, 0, 0],
             [0, 0, 0, 0, 0, 0, 0, 0, 0, 0]]
 
     print('                PATHFINDING')
@@ -49,5 +49,3 @@ if __name__ == "__main__":
     for row in maze:
         print(''.join(colored('{0} '.format(num), 'blue') if num == '.' or num == 'S' or num == 'E' else ''.join(
             '{0} '.format(num)) for num in row))
-        # print([num if num == '.' for num in row])
-        # print([x if x % 2 != 0 else x * 100 for x in range(1, 10)])
