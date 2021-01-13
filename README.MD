@@ -1,6 +1,6 @@
 # Pathfinding
 
-Pathfinding seeks to find the shortest path using Depth-first search, Breadth-first Search, Dijkstra's algorithm, and A\* search.
+Pathfinding seeks to find the shortest path in a 2D grid using Depth-first search, Breadth-first Search, Dijkstra's algorithm, and A\* search.
 
 ### Built with:
 
