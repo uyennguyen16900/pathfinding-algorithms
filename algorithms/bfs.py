@@ -40,33 +40,3 @@ def getPath(startNode, targetNode, grid):
         curr = curr.prev
 
     return path[::-1]
-
-
-maze = [[0, 1, 0, 0, 1, 0, 0, 0, 0, 0],
-        [0, 1, 0, 0, 1, 0, 0, 0, 0, 0],
-        [0, 0, 1, 0, 1, 0, 0, 0, 0, 0],
-        [0, 0, 0, 0, 1, 0, 0, 0, 0, 0],
-        [0, 0, 0, 0, 1, 0, 0, 0, 0, 0],
-        [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
-        [0, 0, 0, 0, 1, 0, 0, 0, 0, 0],
-        [0, 0, 0, 0, 1, 0, 0, 0, 0, 0],
-        [0, 0, 0, 0, 1, 0, 0, 0, 0, 0],
-        [0, 0, 0, 0, 0, 0, 0, 0, 0, 0]]
-
-start = (0, 0)
-end = (9, 9)
-
-startNode = Node(start[0], start[1])
-print(bfs(start, end, maze))
-print(maze)
-# for row in maze:
-#     for item in row:
-#         if item == 0:
-#             print " "
-#         elif item == 1:
-#             print "X"
-
-
-# a = []
-# heappush(a, (1, 'ji'))
-# print((1, 'ji') in a)

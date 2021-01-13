@@ -16,7 +16,6 @@ def astar(start, target, grid):
     # closedSet contains nodes that have already been examined
     closedSet = []
 
-    # openSet.add(startNode)
     heappush(openSet, (startNode.distance, startNode))
     while len(openSet) > 0:
         curr = heappop(openSet)[1]
@@ -68,33 +67,3 @@ def getPath(startNode, targetNode, grid):
         curr = curr.prev
 
     return path[::-1]
-
-
-maze = [[0, 1, 0, 0, 1, 0, 0, 0, 0, 0],
-        [0, 1, 0, 0, 1, 0, 0, 0, 0, 0],
-        [0, 0, 1, 0, 1, 0, 0, 0, 0, 0],
-        [0, 0, 0, 0, 1, 0, 0, 0, 0, 0],
-        [0, 0, 0, 0, 1, 0, 0, 0, 0, 0],
-        [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
-        [0, 0, 0, 0, 1, 0, 0, 0, 0, 0],
-        [0, 0, 0, 0, 1, 0, 0, 0, 0, 0],
-        [0, 0, 0, 0, 1, 0, 0, 0, 0, 0],
-        [0, 0, 0, 0, 0, 0, 0, 0, 0, 0]]
-
-start = (2, 0)
-end = (0, 3)
-
-startNode = Node(start[0], start[1])
-print(astar(start, end, maze))
-print(maze)
-# for row in maze:
-#     for item in row:
-#         if item == 0:
-#             print " "
-#         elif item == 1:
-#             print "X"
-
-
-# a = []
-# heappush(a, (1, 'ji'))
-# print((1, 'ji') in a)
